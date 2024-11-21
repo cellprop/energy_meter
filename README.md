@@ -25,7 +25,25 @@ def ModRTU_CRC(buf, length):
     # Return the calculated CRC (unsigned 16-bit integer)
     return crc & 0xFFFF
 
-# Example usage:
-data = [0x01, 0x03, 0x00, 0x00, 0x00, 0x0A]  # Sample byte array
-crc_result = ModRTU_CRC(data, len(data))
-print(f"CRC result: {hex(crc_result)}") -----------------------------------------------------------------
+# ALL REGISTER ADDRESSES:
+# Register address:
+EM2M_DEFAULT_SLAVE_ADDRESS = 0x01
+FUNCTION_CODE = 0x04
+TOTAL_ACTIVE_ENERGY_REG = 0x01
+IMPORT_ACTIVE_ENERGY_REG = 0x03
+EXPORT_ACTIVE_ENERGY_REG = 0x05
+TOTAL_REACTIVE_ENERGY_REG = 0x07
+IMPORT_REACTIVE_ENERGY_REG = 0x09
+EXPORT_REACTIVE_ENERGY_REG = 0x0B
+APPARENT_ENERGY_REG = 0x0D
+ACTIVE_POWER_REG = 0x0F
+REACTIVE_POWER_REG = 0x11
+APPARENT_POWER_REG = 0x13
+VOLTAGE_REG = 0x15
+CURRENT_REG = 0x17
+POWER_FACTOR_REG = 0x19 
+FREQUENCY_REG = 0x1B
+MAX_DEMAND_ACTIVE_POWER_REG = 0x1D
+MAX_DEMAND_REACTIVE_POWER_REG = 0x1F
+MAX_DEMAND_APPARENT_POWER_REG = 0x21
+
