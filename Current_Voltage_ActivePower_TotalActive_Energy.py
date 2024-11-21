@@ -14,7 +14,7 @@ FREQUENCY_REG = 0x1B
 ACTIVE_POWER_REG = 0x0F  # Active Power Register
 
 # COM port name (update with the correct port on your system)
-COM_PORT_NAME = 'COM7'
+COM_PORT_NAME = '/dev/ttyUSB0'
 
 # CRC16 Calculation (Modbus CRC)
 def ModRTU_CRC(data):
@@ -32,7 +32,7 @@ def ModRTU_CRC(data):
 # Function to send Modbus requests and read responses
 def read_register(register):
     try:
-        ser = serial.Serial(COM_PORT_NAME, 9600, 8, 'N', 1, timeout=3)
+        ser = serial.Serial(COM_PORT_NAME, 9600, 8, 'N', 1, timeout=1)
         if ser.is_open:
             # Prepare Modbus request
             req = [EM2M_DEFAULT_SLAVE_ADDRESS, FUNCTION_CODE, 0x00, register, 0x00, 0x02]
@@ -50,6 +50,8 @@ def read_register(register):
             if len(response) >= 7:  # Ensure valid response
                 data_bytes = response[3:7]  # Extract data bytes
                 float_value = struct.unpack('>f', data_bytes)[0]  # Big-endian float
+               
+
                 return "", float_value
             else:
                 return "FAILURE", 0.00
@@ -83,8 +85,8 @@ def read_data_continuously():
             print(f"Total Active Energy Reading: {status}, Value: {total_active_energy:.2f} kWh")
 
             # Uncomment to read frequency if needed
-            #status, frequency = read_register(FREQUENCY_REG)
-            #print(f"Frequency Reading: {status}, Value: {frequency:.2f} Hz")
+            status, frequency = read_register(FREQUENCY_REG)
+            print(f"Frequency Reading: {status}, Value: {frequency:.2f} Hz")
 
             # Add a short delay to avoid overwhelming the device with requests
             time.sleep(2)  # Adjust the delay as needed
